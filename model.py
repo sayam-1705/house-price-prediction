@@ -64,7 +64,21 @@ plt.title("Linear Regression — House Price Prediction")
 plt.legend()
 plt.tight_layout()
 
-if "agg" in plt.get_backend().lower():
-    plt.savefig("regression_plot.png", dpi=150)
+backend = plt.get_backend().lower()
+non_interactive_backends = {
+    "agg",
+    "cairo",
+    "pdf",
+    "pgf",
+    "ps",
+    "svg",
+    "template",
+    "module://matplotlib_inline.backend_inline",
+}
+
+if backend in non_interactive_backends:
+    output_path = Path(__file__).resolve().parent / "regression_plot.png"
+    plt.savefig(output_path, dpi=150)
+    print(f"Plot saved to: {output_path}")
 else:
     plt.show()
